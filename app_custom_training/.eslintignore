@@ -1,0 +1,6 @@
+cartridges/app_custom_training/cartridge/static/
+coverage/
+doc/
+bin/
+codecept.conf.js/
+webpack.config.js

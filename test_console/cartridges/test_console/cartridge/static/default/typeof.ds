@@ -1,0 +1,21 @@
+var result : String = "";
+
+var value = new Object(); // replace with the value you want to test
+
+if (typeof(value)=="object" && value!=null) {
+	result += "object\n";
+	if ("getClass" in value) {
+		result += "class: " + value.getClass()+"\n";
+	};
+	if ("constructor" in value && "toString" in value.constructor) {
+		var parsedConstructor : Array = value.constructor.toString().match(/function\s*(\w+)/);
+		if (parsedConstructor && parsedConstructor.length == 2) {
+			result += "constructor: " + parsedConstructor[1]+"\n";
+		}
+	};
+	result += "prototype: "+Object.prototype.toString.call(value).slice(8, -1)+"\n";
+} else {
+	result = typeof(value);
+};
+
+return result;

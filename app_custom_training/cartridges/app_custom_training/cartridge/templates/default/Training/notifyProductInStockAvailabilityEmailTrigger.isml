@@ -1,0 +1,8 @@
+<style>
+*{
+   font-family: 'Brush Script MT', cursive;
+ }
+ </style>
+<h1>${Resource.msg('welcome.hi.message', 'forms', null)}</h1>
+<h1>${pdict.firstName} ${pdict.lastName}</h1>
+<h1><a href="${pdict.productUrl}">Click Here</a> ${Resource.msg('notifyMe.message', 'forms', null)}</h1>

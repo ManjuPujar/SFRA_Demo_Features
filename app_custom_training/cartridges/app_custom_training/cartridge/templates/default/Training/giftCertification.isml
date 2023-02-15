@@ -1,0 +1,64 @@
+<iscomment> <isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/cart.js');
+</isscript> </iscomment>
+<style>
+hr {
+  border-top: 1px dashed black;
+}
+</style>
+
+<isset name="giftCertification" value="${pdict.forms.billingForm.giftCertificationCode}" scope="page" />
+<br>
+<hr>
+<h4><b><isprint value="${Resource.msg('gift.certificate.label.header','forms',null)}" encoding="htmlcontent" /></b></h4>
+<hr>
+
+<!------------------------------------------------>
+<!---        For Promo Code                    --->
+<!------------------------------------------------>
+
+<isinclude template="cart/cartPromoCode" />
+<div class="coupons-and-promos">
+    <isinclude template="cart/cartCouponDisplay" />
+</div>
+<isinclude template="cart/cartRemoveCouponModal"/>
+<hr>
+
+<!------------------------------------------------>
+<!---        For Gift Certification            --->
+<!------------------------------------------------>
+
+<div class="row">
+    <div class="col-12">
+        <form action="${URLUtils.url('GiftCertificationCodePayment-Redeem')}" class="gift-certiffication-code-form" method="GET" name="promo-code-form">
+            <div class="form-group">
+                <label for="couponCode">${giftCertification.giftcertificationheader.label}</label>
+                <div class="row">
+                    <div class="col-5">
+                        <input type="text" class="form-control coupon-code-field" id="gift-coupon-code-input" name="couponCode" placeholder="${Resource.msg('gift.certificate.code.show','forms',null)}">
+                        <div class="coupon-error" id="for-replacing-input-msg">
+                            &nbsp;&nbsp;<span class="coupon-missing-error" id="missingCouponCode-response-msg" role="alert">${Resource.msg('gift.certificate.code.notapplied', 'forms', null)}</span>
+                            <span class="coupon-error-message" id="invalidCouponCode" role="alert"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-3 promo-code-submit">
+                        <button type="submit" class="btn btn-primary btn-block promo-code-btn" id="gift-card-code-apply" data-url="${URLUtils.http('GiftCertificationCodePayment-Redeem')}">
+                            ${Resource.msg('gift.certificate.apply','forms',null)}
+                        </button>
+                    </div>
+                    <div class="col-4 promo-code-submit" id="gift-code-balance-check">
+                        <button type="submit" class="btn btn-primary btn-block promo-code-btn" id="gift-card-balance-check" data-url="${URLUtils.http('GiftCertificationCodePayment-Check')}">
+                            ${Resource.msg('gift.certificate.balance.show','forms',null)}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="remove-button-for-giftcard">
+    &nbsp;&nbsp;<a class="remove-button-giftcertification d-none"   href="${URLUtils.url('GiftCertificationCodePayment-Remove')}">remove</a>
+</div>
+<hr>

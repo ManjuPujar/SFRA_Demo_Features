@@ -1,0 +1,8 @@
+<isdecorate template="common/layout/page">
+	<isinclude template="Training/arrayProductInclude"/>
+		<isloop items="${pdict.ArrayList}" var="productList"> 
+			<h1>
+				<isprint value="${productList.name}" />	
+			</h1>
+		</isloop>
+</isdecorate>

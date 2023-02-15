@@ -1,0 +1,28 @@
+<div class="isCustomizableProductDiv">
+	<input type="checkbox" id="isCustomizableProduct" class="isCustomizableProduct-Checkbox">
+	<label
+		for="isCustomizableProduct"><isprint
+			value="${Resource.msg('label.input.iscustomizable', 'forms', null)}" />
+	</label>
+</div>
+
+<div class="isCustomizableProductForm" style="display: none;">
+	<div class="form-group">
+		<label class="form-control-label" for="registration-form-fname">
+			<isprint value="${pdict.isCustomizableProductForm.frontname.label}"
+				encoding="htmlcontent" />
+		</label>
+		<input type="text" class="form-control-frontName" id="registration-form-fname"
+			data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+			data-range-error="${Resource.msg('error.message.50orless','forms',null)}">
+	</div>
+	<div class="form-group">
+       <label class="form-control-label" for="registration-form-lname">
+		<isprint value="${pdict.isCustomizableProductForm.backname.label}"
+			encoding="htmlcontent" />
+		</label>
+		<input type="text" class="form-control-backname" id="registration-form-lname"
+			data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+			data-range-error="${Resource.msg('error.message.50orless','forms',null)}">
+	</div>
+</div>

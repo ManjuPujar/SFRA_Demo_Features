@@ -1,0 +1,8 @@
+importPackage ( dw.campaign );
+
+/* BM > Site > Online Marketing > Campaigns and Promotions */
+
+var promotionID : String = "Enter_Promotion_ID_here";
+var promotion : Promotion = PromotionMgr.getPromotion(promotionID);
+
+return promotion;

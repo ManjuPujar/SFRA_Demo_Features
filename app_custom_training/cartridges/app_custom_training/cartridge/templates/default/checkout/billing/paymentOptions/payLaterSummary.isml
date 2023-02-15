@@ -1,0 +1,9 @@
+<div class="pay-later-credit-summary">
+    <span>${Resource.msg('payment.summary.first.name', 'forms', null)} ${payment.firstName} </span>
+    <br>
+    <span>${Resource.msg('payment.summary.last.name', 'forms', null)} ${payment.lastName} </span>
+    <br>
+    <span>${Resource.msg('payment.summary.phone.number','forms', null)} ${payment.phoneNumber} </span>
+    <br>
+    <span>${Resource.msg('payment.summary.email.address', 'forms', null)} ${payment.emailAddress} </span>
+</div>

@@ -1,0 +1,72 @@
+/**
+ * XML DOM Sample with usage of EcmaScript 4 XML (e4x)
+ * NOTE: Demandware Studio Script Editor will present a lot of syntax errors for e4x code and clauses, despite they will be working properly
+ * Whenever you have dash symbol in elements name, you will be accessing it by use of ["name-of-element"] syntax (add @ before the first square bracket for attributes)
+ */
+var result : String = "";
+
+// Initialization of an XML variable can be done with inline XML data or with "new XML()" constructor
+var allStores : XML =
+	<?xml version="1.0" encoding="UTF-8"?>
+	<stores xmlns="http://www.demandware.com/xml/impex/store/2007-04-30">
+	    <store store-id="Middlesborough">
+	        <name>Middlesborough</name>
+	        <address1>Unit 13 Oberhausen Mall</address1>
+	        <city>Middlesborough</city>
+	        <postal-code>TS1 1TB</postal-code>
+	        <country-code>UK</country-code>
+	        <phone>01642 244350</phone>
+	    </store>
+
+	    <store store-id="Middlesborough City Centre">
+	        <name>Middlesborough City Centre</name>
+	        <address1>Unit 11 Newton Mall</address1>
+	        <city>Middlesbrough</city>
+	        <postal-code>TS1 2NW</postal-code>
+	        <country-code>UK</country-code>
+	        <phone>01642 221114</phone>
+	    </store>
+
+	</stores>;
+
+/* Whenever the xml includes a xmlns="..." namespace definition, the following clause is needed */
+default xml namespace = allStores.namespace();
+
+// It is possible to add new elements on a given element level by just using the plus symbol.
+// Notice the use of variables for specifying values of elelement and attribute text values
+var newStoreName : String = "Scarborough";
+var newStoreUnit : Number = 5;
+allStores.store +=
+    <store store-id={newStoreName}>
+        <name>{newStoreName}</name>
+        <address1>Unit {newStoreUnit}</address1>
+        <city>Scarborough</city>
+        <postal-code>Y011 1UE</postal-code>
+        <country-code>UK</country-code>
+        <phone>01723 375544</phone>
+    </store>;
+
+var foundStore : XMLList;
+
+// The query syntax of e4x is very much alike the one of XPath queries
+foundStore = allStores.store.(@["store-id"] == "Middlesborough");
+// Notice that all XML variable assignments are done by reference
+// So that whenever we change the foundStore variable, we will be changing allStores XML
+foundStore.@["store-id"] = "Middlesborough Central";
+foundStore.name = "Middlesborough Central Store";
+
+// It is possible to reference by index
+// Also whenever we dont need a given element we can remove it with delete statement
+delete allStores.store[0];
+// Deleting with a query is a bit tricky - you need to add the [0] after the query statement
+delete allStores.store.(@["store-id"] == "Scarborough")[0];
+// Notice that despite we have deleted the element from the allStores XML it is still accessible in the foundStore variable
+
+// Here we will list name-value pairs of XML element name and element text for the Middlesborough City Centre
+foundStore = allStores.store.(@["store-id"] == "Middlesborough City Centre").children();
+
+for each (var element : XML in foundStore) {
+    result += element.localName() + "\n";
+    result += element.text() + "\n\n";
+}
+return result;

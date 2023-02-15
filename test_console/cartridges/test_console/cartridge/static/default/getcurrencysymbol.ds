@@ -1,0 +1,8 @@
+importPackage ( dw.system );
+importPackage ( dw.util );
+
+var currencyCode : String = Site.getCurrent().currencyCode;
+var currency : Currency = Currency.getCurrency(currencyCode);
+var currencySymbol : String = currency.symbol;
+
+return currencySymbol;

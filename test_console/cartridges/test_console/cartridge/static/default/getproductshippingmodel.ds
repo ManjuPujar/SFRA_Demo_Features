@@ -1,0 +1,13 @@
+importPackage ( dw.catalog );
+importPackage ( dw.order );
+
+/* BM > Site > Ordering > Shipping Methods  */
+
+/* Each shipping method can be included or excluded for a set of given products. */
+/* The set of shipping methods, in relation to a given product, constitutes the product's shipping model */
+
+var productID : String = "Enter_Product_ID_here";
+var product : Product = ProductMgr.getProduct(productID);
+var productShippingModel : ProductShippingModel = ShippingMgr.getProductShippingModel(product);
+
+return productShippingModel;

@@ -1,0 +1,10 @@
+<isloop items = "${pdict.allCustomobjectList}" var = "customObjects"> 
+	<h1>
+		<isprint value="${customObjects.custom.EmailAddress}" />
+	</h1>
+	<isloop items="${customObjects.custom.PID}" var="productIDs"> 
+		<h1>
+			<isprint value="${productIDs}" />
+		</h1>
+	</isloop>
+</isloop>

@@ -1,0 +1,11 @@
+importPackage ( dw.net );
+
+var result : String = "";
+var httpClient : HTTPClient = new HTTPClient();
+var targetURL : String = "http://automation.whatismyip.com/n09230945.asp";
+
+httpClient.open("GET", targetURL);
+httpClient.send();
+result = httpClient.text;
+
+return result;

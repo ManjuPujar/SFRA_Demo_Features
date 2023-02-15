@@ -1,0 +1,6 @@
+importPackage ( dw.system );
+importPackage ( dw.util );
+
+var result : String = "";
+result = Date().toString() + " ~ Instance type : " + ["DEVELOPMENT_SYSTEM", "STAGING_SYSTEM", "PRODUCTION_SYSTEM"][System.instanceType];
+return result;

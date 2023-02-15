@@ -1,0 +1,2 @@
+<h1>Redirected to the Url</h1>
+<isredirect location="${pdict.cookieObject}" />

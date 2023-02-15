@@ -1,0 +1,8 @@
+importPackage ( dw.customer );
+
+/* BM > Site > Customers > Customers */
+
+var profileID : String = "Enter_Customer_Number_here";
+var profile : Profile = CustomerMgr.queryProfile('customerNo={0}', profileID);
+
+return profile;

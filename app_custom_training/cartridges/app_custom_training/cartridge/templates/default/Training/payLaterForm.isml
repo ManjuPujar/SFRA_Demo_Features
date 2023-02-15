@@ -1,0 +1,85 @@
+<isset name="payLaterForm" value="${pdict.forms.billingForm.payLaterFields}" scope="page" />
+<div id="payLater-form">
+    <form class="form-pay-later-option" >
+        <div class="row">
+            <div class="col-sm-10">
+                    <div class="form-group <isif condition="${!!payLaterForm.firstname.mandatory === true}">required</isif>">
+                    <label class="form-control-label" for="email-subscription-fname">
+                        <h5><b><isprint value="${payLaterForm.firstname.label}" encoding="htmlcontent" /></b></h5>
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="email-subscription-fname"
+                        data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+                        data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+                        aria-describedby="form-fname-error"
+                        <isprint value=${payLaterForm.firstname.attributes} encoding="off" />>
+                    <div class="invalid-feedback" id="form-fname-error"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10">
+                    <div class="form-group <isif condition="${!!payLaterForm.lastname.mandatory === true}">required</isif>">
+                    <label class="form-control-label" for="email-subscription-lname">
+                        <h5><b><isprint value="${payLaterForm.lastname.label}" encoding="htmlcontent" /></b></h4>
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="email-subscription-lname"
+                        data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+                        data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+                        aria-describedby="form-fname-error"
+                        <isprint value=${payLaterForm.lastname.attributes} encoding="off" />>
+                    <div class="invalid-feedback" id="form-fname-error"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group
+                    <isif condition="${!!payLaterForm.phone.mandatory === true}">required</isif>">
+                    <label class="form-control-label" for="email-subscription-phone">
+                            <h5><b><isprint value="${payLaterForm.phone.label}" encoding="htmlcontent" /></b></h4>
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="email-subscription-phone"
+                        data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+                        data-pattern-mismatch="${Resource.msg('error.message.parse.phone.profile.form','forms',null)}"
+                        data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+                        aria-describedby="form-phone-error"
+                        <isprint value=${payLaterForm.phone.attributes} encoding="off" />>
+                    <div class="invalid-feedback" id="form-phone-error"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group
+                    <isif condition="${!!payLaterForm.email.mandatory === true}">required</isif>">
+                    <label class="form-control-label" for="email-subscription-email">
+                            <h5><b><isprint value="${payLaterForm.email.label}" encoding="htmlcontent" /></b></h4>
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="email-subscription-email"
+                        data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+                        data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
+                        data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+                        aria-describedby="form-email-error"
+                        <isprint value=${payLaterForm.email.attributes} encoding="off" />>
+                    <div class="invalid-feedback" id="form-email-error"></div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </form>
+</div>

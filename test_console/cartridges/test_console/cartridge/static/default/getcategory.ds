@@ -1,0 +1,8 @@
+importPackage ( dw.catalog );
+
+/* BM > Site > Products and Catalogs > Catalogs */
+
+var categoryID : String = "Enter_Category_ID_here";
+var category : Category = CatalogMgr.getCategory(categoryID);
+
+return category;

@@ -1,0 +1,13 @@
+importPackage ( dw.object );
+
+/* BM > Site > Custom Objects > Custom Object Editor */
+
+var customObjectType : String = "CUSTOM_TYPE"; // Enter your custom object type here
+var customObjectId = "identifier"; // Can be either Numeric or String value
+var query = "custom.keyattribute = {0}"; // replace keyattribute with the name of the key
+
+var customObject : CustomObject;
+customObject = CustomObjectMgr.getCustomObject(customObjectType, customObjectId);
+customObject = CustomObjectMgr.queryCustomObject(customObjectType, query, customObjectId); // This is alternative to the row above
+
+return customObject;

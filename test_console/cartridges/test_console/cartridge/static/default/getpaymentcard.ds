@@ -1,0 +1,8 @@
+importPackage ( dw.order );
+
+/* BM > Site > Ordering > Payment Methods > [Credit/Debit Cards] */
+
+var cardTypeID : String = "Enter_Card_Type_ID_Here"; // as written in the "Type" column of "Manage Credit/Debit Cards" panel
+var cardType : PaymentCard = PaymentMgr.getPaymentCard(cardTypeID);
+
+return cardType;

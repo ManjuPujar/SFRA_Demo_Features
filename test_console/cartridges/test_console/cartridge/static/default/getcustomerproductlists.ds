@@ -1,0 +1,17 @@
+importPackage ( dw.customer );
+importPackage ( dw.util );
+
+/* Product Lists are not available from Business Manager */
+var profileID : String = "Enter_Customer_Number_here";
+var profile : Profile = CustomerMgr.queryProfile('customerNo={0}', profileID);
+var customer : Customer = profile.customer;
+
+/* Available types are
+	ProductList.TYPE_WISH_LIST
+	ProductList.TYPE_SHOPPING_LIST
+	ProductList.TYPE_GIFT_REGISTRY
+	ProductList.TYPE_CUSTOM_1, 2, 3
+*/
+var productLists : Collection = ProductListMgr.getProductLists(customer, ProductList.TYPE_WISH_LIST);
+
+return productLists;

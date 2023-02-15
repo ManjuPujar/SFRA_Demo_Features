@@ -1,0 +1,8 @@
+importPackage ( dw.catalog );
+
+/* BM > Site > Online Marketing > Stores */
+
+var storeID : String = "Enter_Store_ID_here";
+var store : Store = StoreMgr.getStore(storeID);
+
+return store;

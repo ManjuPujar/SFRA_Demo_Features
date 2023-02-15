@@ -1,0 +1,18 @@
+<!--- applicable credit cards--->
+<div class="tab-pane  payLater-content" id="payLater-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is credit card --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="PAYLATER_CREDIT"
+        >
+
+        <!--- register/authenticated user --->
+        <isif condition="${pdict.customer.registeredUser}">
+            <fieldset class="payLater-form ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : ''}">
+                <isinclude template="Training/payLaterForm" />
+            </fieldset>
+        </isif>
+    </fieldset>
+</div>

@@ -1,0 +1,38 @@
+/**
+*   @input  CurrentHttpParameterMap : dw.web.HttpParameterMap
+*	@input  PipelineName : String
+*   @input  StartNodeName : String
+*   @output ProcessURL: dw.web.URL
+*
+*/
+importPackage( dw.system );
+importPackage( dw.web );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+	try{
+	    var pipeline = pdict.PipelineName;
+	    var startNode = pdict.StartNodeName;
+	    	
+	   	if (empty(pipeline) || empty(startNode)) {
+	    	pipeline = "Default";
+	    	startNode = "Start";
+	    }
+	    
+	    var parameterArray = new Array();
+	    var i = 0;
+	    for each( parameterName in pdict.CurrentHttpParameterMap.getParameterNames() ){
+	     	if (pdict.CurrentHttpParameterMap.get(parameterName) != null && 
+	     		pdict.CurrentHttpParameterMap.get(parameterName).value != "null" && parameterName != "source_txt"){
+	     		parameterArray[i] = new dw.web.URLParameter(parameterName, pdict.CurrentHttpParameterMap.get(parameterName));
+	     		i++;
+	     	}
+	    }
+	    var action : String = new dw.web.URLAction(pipeline + "-" + startNode);
+	    var location : dw.web.URL = URLUtils.url(action, parameterArray);
+    	pdict.ProcessURL = location;
+    }catch(e) {
+		return PIPELET_ERROR;
+	}
+    return PIPELET_NEXT;
+}

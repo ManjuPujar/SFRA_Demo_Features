@@ -1,0 +1,13 @@
+/* Simple Image Transformation Service test */
+importPackage ( dw.web );
+
+var imagePath : String = "themes/demandwarestore/images/logo.gif";
+
+var transform : Object = new Object();
+transform.scaleWidth = 400;
+transform.scaleHeight = 400;
+transform.scaleMode = "fit";
+
+var imageURL : URL = URLUtils.imageURL(imagePath, transform);
+
+return imageURL.toString();

@@ -1,0 +1,8 @@
+importPackage ( dw.content );
+
+/* BM > Site > Content > Library Folder */
+
+var folderID : String = "Enter_Content_Asset_Folder_ID_here";
+var folder : Folder = ContentMgr.getFolder(folderID);
+
+return folder;

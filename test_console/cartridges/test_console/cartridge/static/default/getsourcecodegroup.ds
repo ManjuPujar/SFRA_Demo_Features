@@ -1,0 +1,15 @@
+importPackage ( dw.object );
+importPackage ( dw.campaign );
+
+/* BM > Site > Online Marketing > Source-Code Groups */
+
+var sourceCodeGroupId = "Enter_Source_Code_Group_ID_here";
+
+var sourceCodeGroup : SourceCodeGroup;
+// Need to use the method which returns SeekableIterator, because the querySystemObject method returns PersistentObject, which cannot be typecasted to dw.campaign.SourceCodeGroup
+sourceCodeGroup = SystemObjectMgr.querySystemObjects("SourceCodeGroup", "ID={0}", null, sourceCodeGroupId).first();
+
+return sourceCodeGroup;
+
+// The currently active source code group can be obtained from the following expression:
+// session.sourceCodeInfo ? session.sourceCodeInfo.group : null

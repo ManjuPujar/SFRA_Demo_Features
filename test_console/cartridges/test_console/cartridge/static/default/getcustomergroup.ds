@@ -1,0 +1,8 @@
+importPackage ( dw.customer );
+
+/* BM > Site > Customers > Customer Groups */
+
+var customerGroupID : String = "Enter_Customer_Group_here";
+var customerGroup : CustomerGroup = CustomerMgr.getCustomerGroup(customerGroupID);
+
+return customerGroup;

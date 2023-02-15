@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+	<field
+			formid="frontname"
+			label="label.input.iscustomizable.frontname"
+			type="string"
+			binding="frontname"
+            max-length="50" />
+    <field
+    		formid="backname"
+    		label="label.input.iscustomizable.backname"
+    		type="string"
+    		binding="backname"
+    		max-length="50"
+            missing-error="address.lastname.missing"/>
+</form>

@@ -1,0 +1,8 @@
+importPackage ( dw.order );
+
+/* BM > Site > Online Marketing > Gift Certificates */
+
+var giftCertificateCode : String = "Enter_Gift_Certificate_Code_here"; // This is the code which the end user will use
+var giftCertificate : GiftCertificate = GiftCertificateMgr.getGiftCertificateByCode(giftCertificateCode);
+
+return giftCertificate;

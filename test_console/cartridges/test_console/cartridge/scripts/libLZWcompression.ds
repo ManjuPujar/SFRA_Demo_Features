@@ -1,0 +1,75 @@
+/**
+ *
+ * Description:
+ * 	This library is implementation of LZW compression/decompression
+ *
+ */
+
+importPackage( dw.system );
+importPackage( dw.customer );
+importPackage( dw.web );
+importPackage( dw.util );
+
+// LZW-compress a string
+function lzw_encode(s : String) {
+    var d : Date = new Date();
+
+    var dict : HashMap = new HashMap();
+    var data : String = (s + "").split("");
+    var out : Array = [];
+    var currChar;
+    var phrase : String = data[0];
+    var code = 256;
+    for (var i=1; i<data.length; i++) {
+        currChar=data[i];
+        if (dict.get(phrase + currChar) != null) {
+            phrase += currChar;
+        }
+        else {
+            out.push(phrase.length > 1 ? dict.get(phrase) : phrase.charCodeAt(0));
+            dict.put(phrase + currChar, code);
+            code++;
+            phrase=currChar;
+        }
+    }
+    out.push(phrase.length > 1 ? dict.get(phrase) : phrase.charCodeAt(0));
+    for (var i=0; i<out.length; i++) {
+        out[i] = String.fromCharCode(out[i]);
+    }
+
+    var retrunedresult : String = out.join("");
+    Logger.debug("Input: " + s.length/1024 + "kb Output:"+ retrunedresult.length/1024 + "kb Rate: " +(s.length/retrunedresult.length) );
+    Logger.debug((new Date()).getTime() - d.getTime() + ' ms.');
+    return retrunedresult;
+}
+
+
+// Decompress an LZW-encoded string
+function lzw_decode(s : String)
+{
+    var dict : LinkedHashMap = new LinkedHashMap();
+    var data : String = (s + "").split("");
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out : Array = [currChar];
+    var code = 256;
+    var phrase : String;
+    for (var i=1;i<data.length;i++)
+    {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256)
+        {
+            phrase = data[i];
+        }
+        else
+        {
+            phrase = dict.get(""+currCode) ? dict.get(""+currCode) : (oldPhrase + currChar);
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+		dict.put(""+code, oldPhrase + currChar);
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}

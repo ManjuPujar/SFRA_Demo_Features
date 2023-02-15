@@ -1,0 +1,11 @@
+<iscomment>
+ Create a rendering template and assign to a category we created,
+ Render should have slot with category context,
+ Configure the slot, type should be product and assign the created 
+ product.
+ Include a new decorator 
+</iscomment>
+
+<isdecorate template="Training/renderingTemplateSlot"> 
+	<isslot id="P2603Slot" context="category" context-object="${pdict.category}" description="This is a New Slot " preview-url="" />
+</isdecorate>

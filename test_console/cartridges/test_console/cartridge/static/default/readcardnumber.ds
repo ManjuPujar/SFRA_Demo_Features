@@ -1,0 +1,64 @@
+/**
+ * Reads plain text card number from a PaymentInstrument object
+ * This script is for educational purposes only.
+ * This approach should not be used on live environment as having both private and public keys of the same RSA key pair
+ * on the same instance may undermine data security and the PCI compliance of the site.
+ *
+ * Limitations:
+ * The script will return only masked data if the current request is not over SSL secured connection (https)
+ * If the account information has been masked due to the data retention security policy for the site,
+ * the returned value will always be the masked card number, no matter of the connection protocol.
+ *
+ * See the documentation of .encrypt method of dw.crypto.Cipher class for possible way of generating RSA key pairs
+ */
+
+importPackage ( dw.crypto );
+importPackage ( dw.order );
+
+var publicKey : String =
+"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0tJ2Wu6agpFU5BwKU20Z" +
+"k7Cj4+NHG+1IQUvtXId8o5g6b/ZppTbuvI8Dehe9SxTUxBlYcIss+9VXHd+5MoJ/" +
+"DvO2IRBup4G5boXd26y0tv4VSOutIuDZztdy6Ko1oRyQub9SyDWJ6VVbNQA4yzzk" +
+"O1bZfjWqLkOqyKGo0uH1Z809gwxL67TVsqU/v0is4QJTR0SbsgpqHIbLAE3nVPPA" +
+"GC5RY9MxfBCElgdLJABx2RMLQosMxaQSdtJxle9QX+8a3ZCVTJQy85J1VO3aiVBf" +
+"7s8+ST33zRwcCaji/YQVssXFazvZ6NtPy8Jeg03gvvhdJrddZYTlBmLjCyjfFBm+" +
+"bwIDAQAB";
+
+var privateKey : String =
+"MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDS0nZa7pqCkVTk" +
+"HApTbRmTsKPj40cb7UhBS+1ch3yjmDpv9mmlNu68jwN6F71LFNTEGVhwiyz71Vcd" +
+"37kygn8O87YhEG6ngbluhd3brLS2/hVI660i4NnO13LoqjWhHJC5v1LINYnpVVs1" +
+"ADjLPOQ7Vtl+NaouQ6rIoajS4fVnzT2DDEvrtNWypT+/SKzhAlNHRJuyCmochssA" +
+"TedU88AYLlFj0zF8EISWB0skAHHZEwtCiwzFpBJ20nGV71Bf7xrdkJVMlDLzknVU" +
+"7dqJUF/uzz5JPffNHBwJqOL9hBWyxcVrO9no20/Lwl6DTeC++F0mt11lhOUGYuML" +
+"KN8UGb5vAgMBAAECggEBAL8pKTqAukeEQiZoqpBFD/kUJTeBITxYZrkWgM7y53hr" +
+"kylslRTC/6yoPO3bUsAezmJV3RSHji13n/utnf8HxvAm2lGW1c87WIm4BpinPGHl" +
+"eCVb1e0XV0gvobkIhYJmJXDX49c4fKm/xOkFH3ph501LDgFb5cj3gIdV1oAJdX09" +
+"PkbdWEiRnWioNG41An5x3ot/IILtixf+lARdfh18Ezjz8DDpbfZj8GBxadpTHkIP" +
+"pFO2X3EycbjbS+bCDdMnhknZmSYaj5MRiPsuxwnSSeBGhWZn0HrodHNZE2yX0Vdu" +
+"dA71ghNFeNc51DHSO7BSCwVVAwaIGm1TJaBrAkIJ3IECgYEA8mWO33qPhStfaPzC" +
+"uLiibjwI7JzwX1KtrMDFO/IaVuQalR7X4xClOhMaw4Dcinu7Dux2kvFPC/NZ1Qzd" +
+"rK2+LYcVrQ7P93xLZdktntgFnKVK8PB8TvgxiRbQpMCsDzdB/wEMZMgHNzy+PVRz" +
+"ylAQ/GZZJKP/oQOEfcA6zTvQc8ECgYEA3qdICNaUyqCjwq7bBi4jFog0M3LD1NII" +
+"3hBzN9aezXMHSx8sIzLeemJQS+DlFSyy4KJ0+kbzMTVXkPN77mqkplHS3fAc1vEF" +
+"EjG+410x80nKchKCllfaOmUs6riJeXO2xCNu9xdpy/gJawBS/g1Y3F7sC+mBpJJ0" +
+"X3Yrobi7/i8CgYAKgBnDVpTXCPz2GFT7GYx3yAP+9AF5r6Q0YplosmEvuGvqX86s" +
+"WHE/5cn4BCIJobiFufqc/PUWqHEQyKDltRUS9dIbkBO0Pd8qR1Exm1wK4CIx88j+" +
+"xsOmk6VwLaSGeDdUq5/00bF2VBxNndXyQqups2lTLAOL3xIjPGuPrnKmQQKBgQC+" +
+"+fMCibOkPbdZJIv/OBGmoPtNadHpOKKcfrWlHnSlulV2LO2530cO6EcBXox/5hAk" +
+"N5Rom/S6r4tFbGNPs684bZSWAv9pqd/0pDCcanKOwCtiPtg9xmsLjX7CcbiRMRyC" +
+"DfZ/AFkht8W0PtnwyVf/5XdIHGiz1V72BrEUDRVKxwKBgBDisNIkDM44vs8PHsIF" +
+"nklw5tZsHhxMX84zGnuZPi05XBky9R6BV5kowHOOw5RVPWTk6V/kAcunki0s0hRU" +
+"lGdsr/CmyQfo3t57Fim1DS6coTuvdMLmpN0rCmjpcAFMJIXNavERwTXHdwMJe4I6" +
+"8lbwxdRa+0l1Qrv0Z5tnLF4m";
+
+var orderID : String = "Enter_Order_ID_here";
+var order : Order = OrderMgr.queryOrder("orderNo={0}", orderID);
+var paymentInstrument : OrderPaymentInstrument = order.paymentInstruments[0];
+
+var cipher : Cipher = new Cipher();
+var encryptedCardNumber : String = paymentInstrument.getEncryptedCreditCardNumber(PaymentInstrument.ENCRYPTION_ALGORITHM_RSA, publicKey);
+// Result from paymentInstrument.getEncryptedCreditCardNumber is same as result from
+// cipher.encrypt(CardNumber, publickey, "RSA/ECB/PKCS1Padding", null, 0)
+var decryptedCardNumber : String = cipher.decrypt(encryptedCardNumber, privateKey, PaymentInstrument.ENCRYPTION_ALGORITHM_RSA, null, 0);
+return decryptedCardNumber;

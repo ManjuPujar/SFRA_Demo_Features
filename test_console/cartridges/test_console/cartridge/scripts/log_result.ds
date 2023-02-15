@@ -1,0 +1,42 @@
+/**
+* Demandware Script File
+*
+*   @input Result : Object
+*
+*/
+importPackage( dw.system );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+	var res : Object;
+	if (typeof(pdict.Result) == 'object') {
+		res = "";
+		if (pdict.Result == null) {
+			res += "null value object";
+		} else {
+			res += "~~~ Dump of properties of Object Result:\n";
+	        for (var property in pdict.Result) 
+	        {
+	    	    try
+	    	    {
+	    	    	if (typeof( pdict.Result[property] ) != 'function')
+	    	    	{
+	    	    	    res += " ." + property + " : " + typeof(pdict.Result[property]) + " = " + pdict.Result[property] + "\n";
+	    	    	}
+	    	    	else
+	    	    	{
+	    	    	   res += " function " + property +  "\n";
+	    	    	}
+	    	    }
+	    	    catch (e)
+	    	    {
+	    	    	res += " failed [" + property +  "]\n";
+	    	    }
+	    	}
+    	}
+    } else {
+    	res = pdict.Result;
+    }
+	Logger.info("Result:\n"+String(res));
+    return PIPELET_NEXT;
+}

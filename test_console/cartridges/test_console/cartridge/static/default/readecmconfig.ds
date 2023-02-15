@@ -1,0 +1,37 @@
+/* This script will load the configuration for a give ECM Control task into a hash map */
+importPackage ( dw.util );
+importPackage ( dw.object );
+
+// Use ecm_utils for ERA ECM Control and bc_ecm for the ECM Control that works with refapp
+var ecmCartridge : String = "ecm_utils"; //"bc_ecm";
+
+importScript( ecmCartridge + ":library/common/libEcsConfig.ds" );
+
+// Replace taskId and stageId values with the required ECM Control task and stage ids
+var taskId : String = "task.name"; // category
+var localeId : String = "default"; // group
+var stageId : String = "task.name_stage.name"; // subgroup
+
+var ecsConfigMap : HashMap = new HashMap();
+var ecsConfigHelper : Object = new EcsConfig();
+var parameters : Iterator;
+var config : CustomObject;
+var ecsParameter : MapEntry;
+var result : String = "";
+
+ecsConfigHelper.loadGlobal();
+
+ecsConfigHelper.load(taskId, localeId, stageId);
+parameters = ecsConfigHelper.getConfigIterator();
+while(parameters.hasNext()) {
+    config = parameters.next();
+    ecsConfigMap.put(config.custom.key, config.custom.value);
+}
+
+parameters = ecsConfigMap.entrySet().iterator();
+while (parameters.hasNext()) {
+    ecsParameter = parameters.next();
+    result+= ecsParameter.key + " : " + ecsParameter.value + "\n";
+}
+
+return result;

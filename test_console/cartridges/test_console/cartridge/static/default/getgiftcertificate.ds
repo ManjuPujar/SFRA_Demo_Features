@@ -1,0 +1,8 @@
+importPackage ( dw.order );
+
+/* BM > Site > Online Marketing > Gift Certificates */
+
+var giftCertificateID : String = "Enter_Gift_Certificate_ID_here";  // This is the internal identifier for the gift certificate in BM
+var giftCertificate : GiftCertificate = GiftCertificateMgr.getGiftCertificateByMerchantID(giftCertificateID);
+
+return giftCertificate;

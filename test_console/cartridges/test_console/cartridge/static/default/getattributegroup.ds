@@ -1,0 +1,13 @@
+importPackage ( dw.object );
+
+/* BM > Administration > Site Development > System Object Definitions -or- Custom Object Definitions */
+
+var objectType : String = "custom"; // or "system"
+var objectName : String = "Enter_object_name";
+var attributeName : String = "Enter_attribute_name";
+
+var objectMgr = (objectType=="custom") ?  CustomObjectMgr : SystemObjectMgr;
+var objectDefinition : ObjectTypeDefinition = objectMgr.describe(objectName);
+var attributeDefinition : ObjectAttributeDefinition = objectDefinition.getCustomAttributeDefinition(attributeName);
+
+return attributeDefinition.attributeGroups[0].ID;

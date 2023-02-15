@@ -1,0 +1,3 @@
+<h1>In this Isml~aliasInclude.isml , we have remote 
+included the controller of name AliasCheck with route name Alias</h1>
+<isinclude url="${URLUtils.url('AliasCheck-Alias')}" />

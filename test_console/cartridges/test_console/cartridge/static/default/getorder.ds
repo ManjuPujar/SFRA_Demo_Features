@@ -1,0 +1,8 @@
+importPackage ( dw.order );
+
+/* BM > Site > Ordering > Orders */
+
+var orderID : String = "Enter_Order_ID_here";
+var order : Order = OrderMgr.queryOrder("orderNo={0}", orderID);
+
+return order;

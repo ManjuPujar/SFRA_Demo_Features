@@ -1,0 +1,40 @@
+/** 
+ * 
+ * Description:
+ * 	This script stores the console script in a cookie.
+ * 
+ * Pipelet parameters:
+ *  @input 	source 	: String		Either the customer name or unregistered user.
+ *	
+ */
+ 
+importPackage( dw.system ); 
+importPackage( dw.customer ); 
+importPackage( dw.web );
+
+importScript ("libLZWcompression.ds");
+  
+function execute( pdict : PipelineDictionary ) : Number 
+{ 
+  	/***** Pipelet input parameters *****/
+  	var cookieContent 	: String 	= lzw_encode(pdict.source);	 
+  	
+    /***** Pipelet logic 			*****/
+  	try 
+  	{
+  			
+  		if (cookieContent.length<4000) {
+		  	var cookie 		: Cookie 	= new Cookie("consoleSource", escape(cookieContent)); 
+		    
+		    cookie.setMaxAge(60*60*24*7); 
+		    cookie.setDomain(request.getHttpHost()); 
+		    cookie.setPath("/"); 
+	   	 	request.addHttpCookie(cookie);
+		}   	
+   	} catch (e)
+   	{
+   		return PIPELET_ERROR;
+   	}
+
+    return PIPELET_NEXT; 
+}  

@@ -1,0 +1,8 @@
+importPackage ( dw.campaign );
+
+/* BM > Site > Online Marketing > Coupons */
+
+var couponCode : String = "Enter_Coupon_Code_here"; // This is the code used for the coupon by the end user
+var coupon : Coupon = CouponMgr.getCouponByCode(couponCode);
+
+return coupon;

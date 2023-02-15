@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+	<field
+			formid="couponcode"
+			label="gift.coupon.code.label"
+			type="string"
+			mandatory="true"
+			binding="firstName"
+            max-length="50"
+            missing-error="address.firstname.missing"
+            range-error="error.message.50orless"/>
+    <field
+        formid="giftcertificationheader"
+        label="gift.certificate.label.msg"
+        type="string"
+        mandatory="true"
+        binding="lastName"
+        max-length="50"
+        missing-error="address.lastname.missing"
+        range-error="error.message.50orless"/>
+</form>

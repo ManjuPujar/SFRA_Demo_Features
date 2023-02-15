@@ -1,0 +1,28 @@
+#Exclude IDE related project configurations
+.project
+.idea
+.vscode
+*.code-workspace
+.npmrc
+package-lock.json
+
+**/node_modules
+**/.DS_store
+**/*.tsbuildinfo
+
+**/demo_*.zip
+**/site_template_*.zip
+
+test/**/*.jpg
+
+dw.json
+dw.js
+
+jest_html_reporters.html
+coverage
+
+./html-report
+
+#exclude custom .env.* files
+.env.*
+.history/*

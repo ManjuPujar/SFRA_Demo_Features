@@ -1,0 +1,24 @@
+/*
+	JSON.stringify can handle only JavaScript native data types like:
+	boolean, string, number, array and object.
+
+	The function bellow shows a sample JSON.stringify replacer, that can handle E4X XML objects as well
+*/
+var replacer : Function = function(key : String, value: Object) : Object {
+	if (value instanceof XML || value instanceof XMLList) {
+		return value.toXMLString();
+	} else {
+		return value;
+	}
+}
+
+var data : Object = new Object();
+data["member1"] = "Some String";
+data["member2"] = new Array();
+data["member3"] = <test1>XMLtext</test1>;
+
+data.member2.push("Member 2 - submember 1");
+data.member2.push(true);
+data.member2.push(123.456);
+
+return JSON.stringify(data, replacer, "  ");

@@ -1,0 +1,8 @@
+importPackage ( dw.content );
+
+/* BM > Site > Content > Content Assets */
+
+var contentID : String = "Enter_Content_Asset_ID_here";
+var content : Content  = ContentMgr.getContent(contentID);
+
+return content;

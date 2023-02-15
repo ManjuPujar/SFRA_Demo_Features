@@ -1,0 +1,177 @@
+<style>
+    .Form-Center {
+        max-width: 500px;
+        margin: auto;
+    }
+    input::placeholder {
+        text-align: right;
+    }
+    body {
+    background-image: url("background.jpg");
+    }
+</style>
+
+<isdecorate template="common/layout/page">
+    <br>
+    <br>
+    <div class="Form-Center">
+        <form class="gift-certififcation-main-class" method="post" action="${URLUtils.url('GiftCertificationForm-Forms')}">
+            <h3><b><u>Gift Certificates</u></b></h3>
+            <br>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group <isif condition=" ${!!pdict.giftCertificateForm.yourname.mandatory === true}">required</isif>">
+                        <label class="form-control-label" for="giftCertificateForm-your-name">
+                            <h5><b>
+                                <isprint value="${pdict.giftCertificateForm.yourname.label}" encoding="htmlcontent" />
+                            </b></h5>
+                        </label>
+                        <input type="text" class="form-control" id="giftCertificateForm-your-name"
+                            data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                            data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+                            aria-describedby="form-fname-error"
+							<isprint value=${pdict.giftCertificateForm.yourname.attributes} encoding="off" />>
+                        <div class="invalid-feedback" id="giftCertificateForm-yourname-error"></div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group <isif condition=" ${!!pdict.giftCertificateForm.friendsname.mandatory === true}">required</isif>">
+						<label class="form-control-label" for="giftCertificateForm-friends-name">
+							<h5><b>
+								<isprint value="${pdict.giftCertificateForm.friendsname.label}" encoding="htmlcontent" />
+							</b></h5>
+						</label>
+						<input type="text" class="form-control" id="giftCertificateForm-friends-name"
+							data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+							data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+							aria-describedby="form-fname-error" <isprint value=${pdict.giftCertificateForm.friendsname.attributes}
+							encoding="off" />>
+						<div class="invalid-feedback" id="giftCertificateForm-fname-error"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group
+						<isif condition="${!!pdict.giftCertificateForm.friendsemail.mandatory === true}">required</isif>">
+						<label class="form-control-label" for="giftCertificateForm-form-friendsemail">
+						<h5><b>
+							<isprint value="${pdict.giftCertificateForm.friendsemail.label}" encoding="htmlcontent" />
+						</b></h5>
+						</label>
+						<input
+							type="text"
+							class="form-control"
+							id="giftCertificateForm-form-friendsemail"
+							data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+							data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
+							data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+							aria-describedby="form-friendsemail-error"
+							<isprint value=${pdict.giftCertificateForm.friendsemail.attributes} encoding="off" />>
+						<div class="invalid-feedback" id="giftCertificateForm-friendsemail-error"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+    				<div class="form-group
+						<isif condition="${!!pdict.giftCertificateForm.confirmfriendsemail.mandatory === true}">required</isif>">
+						<label class="form-control-label" for="giftCertificateForm-email-confirm">
+						<h5><b>
+							<isprint value="${pdict.giftCertificateForm.confirmfriendsemail.label}" encoding="htmlcontent" />
+						</b></h5>
+						</label>
+						<input
+							type="text"
+							class="form-control"
+							id="giftCertificateForm-email-confirm"
+							data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+							data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
+							data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+							aria-describedby="form-email-confirm-error"
+							<isprint value=${pdict.giftCertificateForm.confirmfriendsemail.attributes} encoding="off" />>
+        				<div class="invalid-feedback" id="giftCertificateForm-email-confirm-error"></div>
+    				</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group <isif condition=" ${!!pdict.giftCertificateForm.message.mandatory === true}">required
+						</isif>">
+						<label class="form-control-label" for="donated-product-message">
+							<h5><b>
+								<isprint value="${pdict.giftCertificateForm.message.label}" encoding="htmlcontent" />
+							</b></h5>
+						</label>
+						<center>
+						<textarea id="donated-product-message" name="message" rows="3" cols="40"></textarea>
+						</center>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+    				<div class="form-group
+						<isif condition="${!!pdict.giftCertificateForm.amount.mandatory === true}">required</isif>">
+						<label class="form-control-label" for="giftCertificateForm-amount-confirm">
+						<h5><b>
+							<isprint value="${pdict.giftCertificateForm.amount.label}" encoding="htmlcontent" />
+						</b></h5>
+						</label>
+						<input
+							type="text"
+							class="form-control"
+							id="giftCertificateForm-amount"
+							data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+							data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
+							data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+							aria-describedby="form-email-confirm-error"
+							<isprint value=${pdict.giftCertificateForm.amount.attributes} encoding="off" />>
+        				<div class="invalid-feedback" id="giftCertificateForm-amount"></div>
+    				</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+					<button type="submit" class="btn btn-block btn-primary">
+						${Resource.msg('gift.certification.button', 'forms', null)}
+					</button>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-12">
+				<form action="${URLUtils.url('GiftCertificationCodePayment-Check')}" class="gift-certiffication-code-form" method="GET" name="promo-code-form">
+					<div class="form-group">
+						<label for="couponCode"><h5><b>
+								<isprint value="${pdict.giftCertificateForm.couponcode.label}" encoding="htmlcontent" />
+							</b></h5>
+						</label>
+						<div class="row">
+							<div class="col-5">
+								<input type="text" class="form-control coupon-code-field" id="gift-coupon-code-input" name="couponCode" placeholder="${Resource.msg('gift.certificate.code.show','forms',null)}">
+								<div class="coupon-error" id="for-replacing-input-msg">
+									&nbsp;&nbsp;<span class="coupon-missing-error" id="missingCouponCode-response-msg" role="alert">${Resource.msg('gift.certificate.code.notapplied', 'forms', null)}</span>
+									<span class="coupon-error-message" id="invalidCouponCode" role="alert"></span>
+								</div>
+							</div>
+							<div class="col-4 promo-code-submit" id="gift-code-balance-check">
+								<button type="submit" class="btn btn-primary btn-block promo-code-btn" id="gift-card-balance-check" data-url="${URLUtils.http('GiftCertificationCodePayment-Check')}">
+									${Resource.msg('gift.certificate.balance.show','forms',null)}
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</isdecorate>

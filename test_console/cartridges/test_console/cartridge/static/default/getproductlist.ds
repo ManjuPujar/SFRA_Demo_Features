@@ -1,0 +1,7 @@
+importPackage ( dw.customer );
+
+/* Product Lists are not available from Business Manager */
+var productListID : String = "Enter_Product_List_ID_here";
+var productList : ProductList = ProductListMgr.getProductList(productListID);
+
+return productList;

@@ -1,0 +1,8 @@
+importPackage ( dw.order );
+
+/* BM > Site > Ordering > Payment Methods */
+
+var paymentMethodID : String = "Enter_Payment_Method_ID_Here";
+var paymentMethod : PaymentMethod = PaymentMgr.getPaymentMethod(paymentMethodID);
+
+return paymentMethod;

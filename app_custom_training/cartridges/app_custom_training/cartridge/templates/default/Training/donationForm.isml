@@ -1,0 +1,109 @@
+<style>
+    .Form-Center {
+        max-width: 500px;
+        margin: auto;
+    }
+    input::placeholder {
+        text-align: right;
+    }
+    body {
+    background-image: url("background.jpg");
+    }
+</style>
+
+<isdecorate template="common/layout/page">
+    <br>
+    <br>
+    <div class="Form-Center">
+        <form class="donation-main-class" method="post" action="${URLUtils.url('Cart-AddProduct')}">
+            <h1><u>Donate For Charity</u></h1>
+            <br>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group <isif condition=" ${!!pdict.donationForm.firstname.mandatory === true}">required</isif>">
+                        <label class="form-control-label" for="donator-first-name">
+                            <h1>
+                                <isprint value="${pdict.donationForm.firstname.label}" encoding="htmlcontent" />
+                            </h1>
+                        </label>
+                        <input type="text" class="form-control" id="donator-first-name"
+                            data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                            data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+                            aria-describedby="form-fname-error" <isprint
+                            value=${pdict.donationForm.firstname.attributes} encoding="off" />>
+                        <div class="invalid-feedback" id="form-fname-error"></div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group <isif condition=" ${!!pdict.donationForm.lastname.mandatory === true}">required</isif>">
+						<label class="form-control-label" for="donator-last-name">
+							<h1>
+								<isprint value="${pdict.donationForm.lastname.label}" encoding="htmlcontent" />
+							</h1>
+						</label>
+						<input type="text" class="form-control" id="donator-last-name"
+							data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+							data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+							aria-describedby="form-fname-error" <isprint value=${pdict.donationForm.lastname.attributes}
+							encoding="off" />>
+						<div class="invalid-feedback" id="form-fname-error"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group
+						<isif condition=" ${!!pdict.donationForm.email.mandatory === true}">required</isif>">
+						<label class="form-control-label" for="donator-email-address">
+							<h1>
+								<isprint value="${pdict.donationForm.email.label}" encoding="htmlcontent" />
+							</h1>
+						</label>
+						<input type="text" class="form-control" id="donator-email-address" placeholder="@abc.com"
+							data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+							data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form', 'forms', null)}"
+							data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+							aria-describedby="form-email-error" <isprint
+							value=${pdict.emailsubscription.email.attributes} encoding="off" />>
+						<div class="invalid-feedback" id="form-email-error"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group <isif condition=" ${!!pdict.donationForm.amount.mandatory === true}">required
+						</isif>">
+						<label class="form-control-label" for="donated-product-amount">
+							<h1>
+								<isprint value="${pdict.donationForm.amount.label}" encoding="htmlcontent" />
+							</h1>
+						</label>
+						<center>
+							<input type="number" class="form-control" id="donated-product-amount" placeholder="$ 123"
+								data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+								data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+								aria-describedby="form-fname-error" <isprint
+								value=${pdict.donationForm.amount.attributes} encoding="off" />>
+							<div class="invalid-feedback" id="form-fname-error"></div>
+						</center>
+					</div>
+				</div>
+			</div>
+
+			<input type="hidden" class="product-id-input" name="productID" value="${pdict.productID}">
+			<input type="hidden" class="product-quantity-input" value="1">
+
+			<div class="row">
+				<div class="col-sm-8">
+					<button type="submit" class="btn btn-block btn-primary">
+						${Resource.msg('label.input.donate.profile', 'forms', null)}
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</isdecorate>

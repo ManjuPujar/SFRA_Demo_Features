@@ -1,0 +1,110 @@
+<style>
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+</style>
+<isscript>
+	var assets = require('*/cartridge/scripts/assets');
+	assets.addJs('/js/notifyProductAvailabilityFormToggle.js');
+ </isscript>
+<h4><b><isprint value="${Resource.msg('label.toggle.notification', 'forms', null)}" /></b></h4>
+<div class="toggle-notification-form">
+    <button type="button" class="btn btn-block btn-primary">
+        ${Resource.msg('label.notify.subscribe', 'forms', null)}
+    </button>
+</div>
+<br>
+<form class="notify-Product-availability" style="display:none;" method = "post" action = "${URLUtils.url('NotifyProductBackInStock-Availability')}" >
+	<center><h3><b><i><u><isprint value="${Resource.msg('label.input.Subscribe', 'forms', null)}" /></u></i></b></h3></center>
+	<br>
+	<div class="row">
+	    <div class="col-sm-12">
+			 <div class="form-group <isif condition="${!!pdict.notificationForm.firstname.mandatory === true}">required</isif>">
+		        <label class="form-control-label" for="email-subscription-fname">
+		            <h4><b><isprint value="${pdict.notificationForm.firstname.label}" encoding="htmlcontent" /></b></h4>
+		        </label>
+		        <input
+		            type="text"
+		            class="form-control"
+		            id="email-subscription-fname"
+		            data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+		            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+		            aria-describedby="form-fname-error"
+		            <isprint value=${pdict.notificationForm.firstname.attributes} encoding="off" />>
+		        <div class="invalid-feedback" id="form-fname-error"></div>
+		    </div>
+		</div>
+	</div>
+
+	<div class="row">
+	    <div class="col-sm-12">
+			 <div class="form-group <isif condition="${!!pdict.notificationForm.lastname.mandatory === true}">required</isif>">
+		        <label class="form-control-label" for="email-subscription-lname">
+		            <h4><b><isprint value="${pdict.notificationForm.lastname.label}" encoding="htmlcontent" /></b></h4>
+		        </label>
+		        <input
+		            type="text"
+		            class="form-control"
+		            id="email-subscription-lname"
+		            data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+		            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+		            aria-describedby="form-fname-error"
+		            <isprint value=${pdict.notificationForm.lastname.attributes} encoding="off" />>
+		        <div class="invalid-feedback" id="form-fname-error"></div>
+		    </div>
+		</div>
+	</div>
+
+   	 <div class="row">
+	    <div class="col-sm-12">
+		   	<div class="form-group
+		        <isif condition="${!!pdict.notificationForm.email.mandatory === true}">required</isif>">
+		        <label class="form-control-label" for="email-subscription-email">
+		             <h4><b><isprint value="${pdict.notificationForm.email.label}" encoding="htmlcontent" /></b></h4>
+		        </label>
+		        <input
+		            type="text"
+		            class="form-control"
+		            id="email-subscription-email"
+		            data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+		            data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
+		            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+		            aria-describedby="form-email-error"
+		            <isprint value=${pdict.notificationForm.email.attributes} encoding="off" />>
+		        <div class="invalid-feedback" id="form-email-error"></div>
+		    </div>
+	    </div>
+   	</div>
+   	<br>
+    <div class="row">
+	    <div class="col-sm-12">
+   	 		<button type="submit" class="btn btn-block btn-primary">
+       			${Resource.msg('label.input.notifyMe.profile', 'forms', null)}
+  	     	</button>
+  	     </div>
+	 </div>
+	 <div style="visibility: hidden" class="row">
+	    <div class="col-sm-2">
+			 <div class="form-group <isif condition="${!!pdict.notificationForm.productID.mandatory === true}">required</isif>">
+		        <label class="form-control-label" for="email-subscription-fname">
+		            <h4><b><isprint value="${pdict.notificationForm.productID.label}" encoding="htmlcontent" /></b></h4>
+		        </label>
+		        <input
+		            type="text"
+		            class="form-control"
+		            id="email-subscription-fname"
+		            value="${pdict.product.id}"
+		            data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+		            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
+		            aria-describedby="form-fname-error"
+		            <isprint value=${pdict.notificationForm.productID.attributes} encoding="off" />>
+		        <div class="invalid-feedback" id="form-fname-error"></div>
+		    </div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,3 @@
+<isloop items="${pdict.object}" var="Elements">
+    <h1>Name of the Product is ${Elements.name}, ID of the Product is ${Elements.ID}  </h1>
+</isloop>

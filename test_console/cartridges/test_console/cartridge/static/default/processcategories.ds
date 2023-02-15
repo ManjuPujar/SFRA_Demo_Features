@@ -1,0 +1,25 @@
+importPackage ( dw.catalog );
+importPackage ( dw.util );
+
+
+function processCategory(category : Category, processor : Function) {
+	processor(category);
+	var iteratorSubCategories : Iterator = processOnlyOnline ? category.onlineSubCategories.iterator() : category.subCategories.iterator();
+	while (iteratorSubCategories.hasNext()) {
+		var subCategory : Category = iteratorSubCategories.next();
+		processCategory(subCategory, processor);
+	}
+}
+
+var result : String = "";
+var startCategory : Category = CatalogMgr.getSiteCatalog().getRoot(); // replace with the category you want to process
+var processOnlyOnline : Boolean = false; // set to true to process only online categories
+
+var categoryProcessor : Function = // the function that processes categories
+	function(category : Category) {
+		result += category.ID + "\n";
+	};
+
+processCategory(startCategory, categoryProcessor);
+
+return result;

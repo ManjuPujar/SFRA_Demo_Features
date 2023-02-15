@@ -1,0 +1,48 @@
+{
+	"hooks": [
+		{
+	        "name": "dw.system.request.onRequest",
+	        "script": "./cartridge/scripts/hooks/redirectingToLocaleIN.js"
+        },
+        {
+	        "name": "dw.system.request.onSession",
+	        "script": "./cartridge/scripts/hooks/redirectingToLocaleIN.js"
+        },
+		{
+            "name": "dw.order.calculate",
+            "script": "./cartridge/scripts/hooks/cart/calculate.js"
+        },
+        {
+            "name": "dw.order.calculateShipping",
+            "script": "./cartridge/scripts/hooks/cart/calculate.js"
+        },
+        {
+            "name": "dw.order.calculateTax",
+            "script": "./cartridge/scripts/hooks/cart/calculate.js"
+        },
+        {
+            "name": "app.payment.processor.merkle_credit",
+            "script": "./cartridge/scripts/hooks/payment/processor/merkle_credit"
+        },
+        {
+            "name": "app.payment.form.processor.merkle_credit",
+            "script": "./cartridge/scripts/hooks/payment/processor/merkle_credit_form_processor"
+        },
+        {
+            "name": "app.payment.processor.pay_later",
+            "script": "./cartridge/scripts/hooks/payment/processor/paylater_credit"
+        },
+        {
+            "name": "app.payment.form.processor.pay_later",
+            "script": "./cartridge/scripts/hooks/payment/processor/paylater_credit_form_processor"
+        },
+        {
+            "name": "app.payment.processor.basic_gift_certificate",
+            "script": "./cartridge/scripts/hooks/payment/processor/giftcertification_credit"
+        },
+        {
+            "name": "app.payment.form.processor.basic_gift_certificate",
+            "script": "./cartridge/scripts/hooks/payment/processor/giftcertification_credit_form_processor"
+        }
+     ]
+}

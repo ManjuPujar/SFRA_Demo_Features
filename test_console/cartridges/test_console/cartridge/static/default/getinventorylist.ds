@@ -1,0 +1,8 @@
+importPackage ( dw.catalog );
+
+/* BM > Site > Products and Catalogs > Inventory */
+
+var inventoryListID : String = "Enter_Inventory_ID_here";
+var inventoryList : ProductInventoryList = ProductInventoryMgr.getInventoryList(inventoryListID);
+
+return inventoryList;

@@ -1,0 +1,8 @@
+importPackage ( dw.campaign );
+
+/* BM > Site > Online Marketing > Coupons */
+
+var couponID : String = "Enter_Coupon_ID_here"; // This is the internal identifier for the coupon in BM
+var coupon : Coupon = CouponMgr.getCoupon(couponID);
+
+return coupon;

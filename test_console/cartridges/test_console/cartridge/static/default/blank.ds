@@ -1,0 +1,19 @@
+importPackage ( dw.campaign );
+importPackage ( dw.catalog );
+importPackage ( dw.content );
+importPackage ( dw.crypto );
+importPackage ( dw.customer );
+importPackage ( dw.io );
+importPackage ( dw.net );
+importPackage ( dw.object );
+importPackage ( dw.order );
+importPackage ( dw.ws );
+importPackage ( dw.system );
+importPackage ( dw.util );
+importPackage ( dw.value );
+importPackage ( dw.web );
+
+var result : String = "";
+
+
+return result;

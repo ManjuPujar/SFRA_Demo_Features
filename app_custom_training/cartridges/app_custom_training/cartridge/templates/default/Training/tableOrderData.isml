@@ -1,0 +1,85 @@
+<isdecorate template="common/layout/page">
+    <br/>
+    <br/>
+    <style>
+        thead {color:white;}
+        tbody {color:black;}
+    </style>
+    <style>
+        table, th, td {
+        border:5px solid black;
+        text-align:center;
+        }
+    </style>
+    <center>
+        <table style="width:80%">
+            <thead>
+                <tr style="background-color:gray">
+                    <th>
+                        <h2>${Resource.msg('prop.table.heading1','TableOrderDataProperties',null)}</h2>
+                    </th>
+                    <th>
+                        <h2>${Resource.msg('prop.table.heading2','TableOrderDataProperties',null)}</h2>
+                    </th>
+                    <th>
+                        <h2>${Resource.msg('prop.table.heading3','TableOrderDataProperties',null)}</h2>
+                    </th>
+                    <th>
+                        <h2>${Resource.msg('prop.table.heading4','TableOrderDataProperties',null)}</h2>
+                    </th>
+                    <th>
+                        <h2>${Resource.msg('prop.table.heading5','TableOrderDataProperties',null)}</h2>
+                    </th>
+                    <th>
+                        <h2>${Resource.msg('prop.table.heading6','TableOrderDataProperties',null)}</h2>
+                    </th>
+                </tr>
+            </thead>
+            <isloop items="${pdict.orders}" var="order">
+                <tr>
+                    <td>
+                        <h1>
+                            <isprint value="${order.orderNo}" />
+                        </h1>
+                    </td>
+                    <td>
+                        <h1>
+                            <isprint value="${order.billingAddress.firstName}" />
+                        </h1>
+                    </td>
+                    <td>
+                        <h1>
+                            <isprint value="${order.billingAddress.lastName}" />
+                        </h1>
+                    </td>
+                    <td>
+                        <h1>
+                            <isprint value="${order.customerEmail}" />
+                        </h1>
+                    </td>
+                    <td>
+                        <h1>
+                            <isprint value="${order.shipments[0].shippingAddress.firstName}" />
+                        </h1>
+                    </td>
+                    <td>
+                        <h1>
+                            <isprint value="${order.shipments[0].shippingAddress.lastName}" />
+                        </h1>
+                    </td>
+                </tr>
+            </isloop>
+        </table>
+    </center>
+    <br/>
+    <center>
+        <h1>
+            Size of the list is 
+            <isprint value="${pdict.listSize}"/>
+        </h1>
+    </center>
+    <br/>
+    <br/>
+    <br/>
+</isdecorate>
+

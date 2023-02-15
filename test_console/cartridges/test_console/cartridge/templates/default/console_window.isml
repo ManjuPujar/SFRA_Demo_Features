@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Demandware Script Test Console</title>
+	<style type="text/css">
+		/* mini CSS "reset" */
+		html, body, div, span, h1, h2, h3, h4, h5, h6, p {
+			margin: 0;
+			padding: 0;
+			font-size: 100%;
+			background-color: #3d3d29;
+		}
+
+		.controls {
+			position: absolute;
+			top: 70px;
+			right: 50px;
+			margin-left: 10px;
+			width: 200px;
+			white-space: nowrap;
+			border-radius:5px;
+		}
+		.controls, ${"#"}source_txt {
+			height: 460px;
+			color: white
+		}
+		.controls div {
+			overflow: hidden;
+		}
+		.controls div div {
+			display: none;
+		}
+		.controls div h2 {
+			height: 30px;
+			background-color: #CCC;
+		}
+		.controls:hover div div, .controls:hover div:last-child div {
+			display: none;
+		}
+		.controls:hover div:hover div, .controls div:last-child div {
+			display: block;
+			height: 360px;
+			overflow-y: auto;
+		}
+		textarea {
+			float: left;
+			max-width: 80%;
+			background-color:black;
+			color:white;
+			border:white 2px solid;
+			border-radius:15px;
+		}
+		.shortcut {
+			font-weight: bold;
+			color: red;
+		}
+		em {
+			font-style: italic;
+		}
+	</style>
+	<isscript>
+		// The idea is to generate base URL which is not Akamai based, thus we are using the relative method call, and replacing the host with the current host
+		var staticURLBase : String;
+		staticURLBase = dw.web.URLUtils.absStatic('/').relative().toString();
+		staticURLBase = staticURLBase.substr(staticURLBase.indexOf('/on/'));
+		staticURLBase = request.httpProtocol+ "://" + request.httpHost + staticURLBase;
+	</isscript>
+    <script>//<![CDATA[
+		function createXMLHttpRequest() {
+			try { return new XMLHttpRequest(); } catch(e) {}
+			try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) {}
+			return null;
+		}
+		var xhReq = createXMLHttpRequest()
+
+		function importPackage(thePackage) {
+			with (document.getElementById('source_txt')) {
+				value = 'importPackage ( ' + thePackage + ' );\n'+value;
+			}
+    	}
+
+	    function pdict(pdictName) {
+			with (document.getElementById('source_txt')) {
+				value = value + 'pdict.' + pdictName;
+			}
+		}
+
+		var staticURLBase = "${staticURLBase}";
+
+		function showSample(file) {
+			xhReq.open("get", staticURLBase+file, true);
+			xhReq.onreadystatechange = function() {
+				if (xhReq.readyState != 4)  { return; }
+				var serverResponse = xhReq.responseText;
+				document.getElementById('source_txt').value = serverResponse;
+			};
+			xhReq.send(null);
+		}
+
+    	function restoreSource()
+    	{
+    		with (document.getElementById('source_txt'))
+    		{
+    			value = lzw_decode(getCookie('consoleSource'));
+    		}
+    	}
+
+		// Decompress an LZW-encoded string
+		function lzw_decode(s)
+		{
+		  var dict = {};
+		  var data = (s + "").split("");
+		  var currChar = data[0];
+		  var oldPhrase = currChar;
+		  var out = [currChar];
+		  var code = 256;
+		  var phrase;
+		  for (var i=1;i<data.length;i++)
+		  {
+		    var currCode = data[i].charCodeAt(0);
+		    if (currCode < 256)
+		    {
+		      phrase = data[i];
+		    }
+		    else
+		    {
+		      phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+		    }
+		    out.push(phrase);
+		    currChar = phrase.charAt(0);
+		    dict[code] = oldPhrase + currChar;
+		    code++;
+		    oldPhrase = phrase;
+		  }
+		  return out.join("");
+		}
+
+    	function getCookie(c_name)
+		{
+			if (document.cookie.length>0)
+  			{
+  				c_start=document.cookie.indexOf(c_name + "=");
+  				if (c_start!=-1)
+    			{
+    				c_start=c_start + c_name.length+1;
+    				c_end=document.cookie.indexOf(";",c_start);
+    				if (c_end==-1) c_end=document.cookie.length;
+    				return unescape(document.cookie.substring(c_start,c_end));
+    			}
+  			}
+			return "";
+		}
+
+		function searchDocumentation()
+		{
+			var documentationURL = "https://documentation.demandware.com/dosearchsite.action?where=conf_all&queryString=";
+			var selectedText =
+				(!!window.getSelection)   ? window.getSelection() :
+				(!!document.getSelection) ? document.getSelection() :
+				(!!document.selection)    ? document.selection.createRange().text : "";
+			selectedText = selectedText.toString();
+			if (selectedText == "") { // Probably FireFox not able to find the selection in the text area
+				with (document.getElementById('source_txt')) {
+					if (selectionStart != undefined) {
+						selectedText = value.substr(selectionStart, selectionEnd - selectionStart);
+					}
+				}
+			}
+			if (selectedText == "") {
+				with (document.getElementById('result_txt')) {
+					if (selectionStart != undefined) {
+						selectedText = value.substr(selectionStart, selectionEnd - selectionStart);
+					}
+				}
+			}
+			if (selectedText != "") {
+				dwDoc = window.open(documentationURL + selectedText, "dwDoc");
+				dwDoc.focus();
+			}
+		}
+    //]]></script>
+</head>
+<body>
+	<script type="text/javascript">//<![CDATA[
+		// Capture press of F1
+		if ("onhelp" in window) { //Internet Explorer
+			window.onhelp = function () {
+				searchDocumentation();
+				return false;
+			}
+		} else { // Other browsers
+			document.onkeydown = function(event) {
+				if (!event) {
+					event=window.event;
+				}
+				var code = (event.charCode) && (event.keyCode==0) ? event.charCode : event.keyCode;
+				cancelKeypress = (code == 112);
+				if (cancelKeypress) { // F1 was pressed
+					searchDocumentation();
+					return false;
+				}
+			}
+			// Additional step required for Opera
+			document.onkeypress = function(event) {
+				if (cancelKeypress) {
+					return false;
+				}
+			}
+		}
+		//]]>
+	</script>
+	<hr></hr>
+	<center><h1 style= "color:white;font-family:Times New Roman", Times, serif">My Test Console Area</h1></center>
+	<hr></hr>
+<form action="${pdict.Action}" method="POST">
+	<label for="source_txt" style="vertical-align: top; float: left; color:white;font-size:15px;"><h1>Source:</h1></label>
+	<br>
+	<textarea id="source_txt" name="source_txt" rows="25" cols="200">${pdict.Source}</textarea>
+	<div style="clear: both"></div>
+	<div class="controls" style= "border:solid white 2px;">
+		<div>
+			<h2>Import Packages</h2>
+			<div>
+			<isloop items="${['dw.campaign','dw.catalog','dw.content','dw.crypto','dw.customer','dw.io','dw.net','dw.object','dw.order','dw.ws','dw.system','dw.util','dw.value','dw.web']}" var="packageName">
+				<button onclick="importPackage('${packageName}'); return false;">${packageName}</button><br/>
+			</isloop>
+			</div>
+		</div>
+
+		<div>
+			<h2>Pipeline Dictionary</h2>
+			<div>
+			<isloop items="${['CurrentCustomer','CurrentForms','CurrentHttpParameterMap','CurrentPageMetaData','CurrentRequest','CurrentSession','CurrentUser','CurrentUserName','CurrentBasket','CurrentProductVariationModels','CurrentProductOptionModels']}" var="pdictName">
+				<button onclick="pdict('${pdictName}'); return false;">${pdictName}</button><br/>
+			</isloop>
+			</div>
+		</div>
+
+		<div>
+			<h2>Code snippets</h2>
+			<isscript>
+				importPackage ( dw.net );
+				importPackage ( dw.web );
+				var snippetListURL : String = URLUtils.staticURL("snippetlist.txt").toString();
+				if (snippetListURL.substr(0, 1) == "/") {
+					snippetListURL = "http://" + request.httpHost + snippetListURL;
+				}
+
+				var httpClient : HTTPClient = new HTTPClient();
+				var snippetList : String = "";
+				var snippets : Array;
+				httpClient.open('GET', snippetListURL);
+				httpClient.send();
+
+				if (httpClient.statusCode == 200)
+				{
+					snippetList = httpClient.text;
+				}
+				snippets = snippetList.split('\n');
+				var counter = 0;
+			</isscript>
+			<div>
+			<isloop items="${snippets}" var="snippet">
+				<isif condition="${!empty(snippet)}">
+					<isset name="counter" value="${counter+1}" scope="page"/>
+					${counter.toString()} <button onclick="showSample('${StringUtils.trim(snippet)}'); return false;" <isif condition="${counter==1}">accesskey="1"</isif> >${StringUtils.trim(snippet)}</button><br/>
+				</isif>
+			</isloop>
+			</div>
+		</div>
+	</div>
+
+	<hr style="clear: both;"/>
+	<label class="shortcut">Alt+X</label>= <input type="submit" value="Execute" alt="Execute" accesskey="X"/>
+	<label class="shortcut">Alt+R</label>= <input type="button" value="Restore Last Source" alt="Restore Last Source" accesskey="R" onclick="restoreSource()" />
+	<label class="shortcut" >F1</label>= <span style=color:white>search in <a target="dwDoc" href="https://documentation.demandware.com">Demandware documentation</a> for the selected keyword</span>
+	<p style=color:white>For FireFox set "ui.key.contentAccess" to be "4" from <em>about:config</em> to make keyboard shortcuts work.</p>
+</form>
+
+<hr />
+
+<isscript>
+	var traverseObj = pdict.Result;
+	var res : String = "";
+
+	if (typeof(traverseObj) == 'object') {
+		if (traverseObj instanceof dw.util.Map) {
+			res += "~~~ Dump of properties of Map Result with length="+traverseObj.length+":\n";
+			var properties : dw.util.SeekableIterator;
+			properties = traverseObj.entrySet().iterator();
+			while (properties.hasNext()) {
+				property = properties.next();
+				try {
+					res = res + property.key + "=" + property.value + "\n";
+				}catch(e) {
+		    	    res += " failed [" + property +  "] "+e.message+"\n";
+				}
+
+			}
+            properties.close();
+		} else if (traverseObj instanceof dw.util.Collection) {
+			res += "~~~ Dump of properties of Collection Result with length="+traverseObj.length+":\n";
+			var properties : dw.util.SeekableIterator;
+			properties = traverseObj.iterator();
+			var index = 0;
+			while (properties.hasNext()) {
+				property = properties.next();
+				try {
+					res = res + index + "=" + traverseObj[index]+"\n";
+				}catch(e) {
+		    	    res += " failed [" + property +  "] "+e.message+"\n";
+				}
+				index++;
+			}
+            properties.close();
+		} else if (traverseObj instanceof StopIteration) {
+			res += traverseObj.toString();
+		} else {
+			if (traverseObj == null) {
+				res += "null value object";
+			} else {
+				res += "~~~ Dump of properties of Object Result:\n";
+		        for (var property in traverseObj)
+		        {
+		    	    try
+		    	    {
+		    	    	if (typeof( traverseObj[property] ) != 'function')
+		    	    	{
+		    	    	    res += " ." + property + " : " + typeof(traverseObj[property]) + " = " + traverseObj[property] + "\n";
+		    	    	}
+		    	    	else
+		    	    	{
+		    	    	   res += " function " + property +  "\n";
+		    	    	}
+		    	    }
+		    	    catch (e)
+		    	    {
+		    	    	res += " failed [" + property +  "]\n";
+		    	    }
+		    	}
+	    	}
+	    }
+    	pdict.Result = res;
+    }
+</isscript>
+<label for="result_txt" style="vertical-align: top; float: left;color:white"><h1>Result:</h1></label>
+<br>
+<textarea id="result_txt" name="result_txt" rows="10" cols="200" readonly="readonly">${pdict.Result}</textarea>
+</body>
+</html>

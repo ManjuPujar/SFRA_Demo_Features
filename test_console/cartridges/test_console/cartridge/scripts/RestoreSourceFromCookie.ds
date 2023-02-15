@@ -1,0 +1,36 @@
+/** 
+ * 
+ * Description:
+ * 	This script restores the console script from a cookie.
+ * 
+ * Pipelet parameters:
+ *  @input 	cookie 	: dw.web.Cookie  The cookie to restore source from
+ *  @output source  : String
+ *	
+ */
+ 
+importPackage( dw.system ); 
+importPackage( dw.customer ); 
+importPackage( dw.web ); 
+ 
+importScript ("libLZWcompression.ds");
+
+function execute( pdict : PipelineDictionary ) : Number 
+{ 
+	if (empty(pdict.cookie) || !("value" in pdict.cookie) || empty(pdict.cookie.value)) {
+		return PIPELET_NEXT;
+	}
+  	/***** Pipelet input parameters *****/
+  	var cookieContent 	: String 	= unescape(pdict.cookie.value);	 
+  	
+    /***** Pipelet logic 			*****/
+  	try 
+  	{
+		pdict.source = lzw_decode(cookieContent);  			
+   	} catch (e)
+   	{
+   		return PIPELET_ERROR;
+   	}
+
+    return PIPELET_NEXT; 
+}  
